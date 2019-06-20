@@ -5,8 +5,7 @@
 
 digit_verif <- function(RUT){
   
-  # falta validar que input RUT sea numerico según formato rut (1000000<=RUT<=99999999)
-  #     if(regla RUT no se cumple) {stop("Rut ingresado no válido")} 
+  # validar que input RUT sea numerico y con formato: 1000000<=RUT<=99999999
   if( (!is.numeric(RUT)) | (RUT < 1000000) | (RUT > 99999999)) {
     stop("Rut ingresado debe ser un número entre 1.000.000 y 99.999.999")}
   
@@ -15,7 +14,7 @@ digit_verif <- function(RUT){
   new_rut <- strsplit(as.character(RUT),"")[[1]]
   new_rut <- as.numeric(new_rut[largo_rut:1])
   
-  suma_prod <- sum(new_rut*c(2:7)) # ver cómo evitar mensaje warning
+  suma_prod <- suppressWarnings(sum(new_rut*c(2:7))) # ver cómo evitar mensaje warning
   digit <- 11 - suma_prod%%11
   
   if(digit == 11) {return(0)}
